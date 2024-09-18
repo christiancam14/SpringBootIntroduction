@@ -4,32 +4,35 @@ import com.codigomorsa.Tutorial.models.Libro;
 import com.codigomorsa.Tutorial.models.Producto;
 import com.codigomorsa.Tutorial.models.UserData;
 import com.codigomorsa.Tutorial.myBeans.MiBean;
-import com.codigomorsa.Tutorial.servicios.OrderService;
+import com.codigomorsa.Tutorial.myBeans.MiComponente;
+import com.codigomorsa.Tutorial.servicios.IOrderService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class Rutas {
 
     // private OrderService orderservice = new OrderService();
-    private OrderService orderservice;
+    private IOrderService orderservice;
     private MiBean miBean;
 
-    // Constructor /* Util para unit test */
-    public Rutas(OrderService orderService, MiBean miBean) {
+    // Constructor /* Util para unit test */ Inyección de depdencias por declaración
+    @Autowired
+    private MiComponente miComponente;
+
+    // Constructor /* Util para unit test */ Inyección de depdencias por constructor
+    public Rutas(IOrderService orderService, MiBean miBean, MiComponente miComponente) {
         this.orderservice = orderService;
         this.miBean = miBean;
+        this.miComponente = miComponente;
     }
 
     private Logger logger = LoggerFactory.getLogger(TutorialApplication.class);
@@ -120,7 +123,12 @@ public class Rutas {
     @GetMapping("/mibean")
     public String saludarDesdeBean() {
         miBean.saludar();
+        return "Completado";
+    }
 
+    @GetMapping("/micomponente")
+    public String saludarDesdeComponente() {
+        miComponente.saludarDesdeComponente();
         return "Completado";
     }
 

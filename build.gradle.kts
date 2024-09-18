@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.slf4j:slf4j-api:2.0.9")
 	implementation("ch.qos.logback:logback-classic:1.4.11")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
